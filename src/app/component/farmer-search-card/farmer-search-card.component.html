@@ -8,6 +8,7 @@
         <input matInput type="text" [matAutocomplete]="auto" formControlName="input" [value]="selected?.name" />
         <mat-icon matSuffix>arrow_forward</mat-icon>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)" [displayWith]="displayFarmer">
+          <mat-option *ngIf="isLoading | async"><mat-spinner diameter="20"></mat-spinner></mat-option>
           <mat-option *ngFor="let item of values | async" [value]="item">
             {{ item.name }}
           </mat-option>

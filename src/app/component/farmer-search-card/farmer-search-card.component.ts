@@ -1,8 +1,8 @@
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete/typings/autocomplete';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
+import {debounceTime, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 
 import {Farmer} from '../../model/Farmer';
 import {FarmerSearchAbstractProvider} from './farmer-search-abstract.provider';
@@ -26,6 +26,8 @@ export class FarmerSearchCardComponent implements OnInit {
   values: Observable<Farmer[]>;
   selected: Farmer;
 
+  private isLoading = new Subject<boolean>();
+
   constructor(private formBuilder: FormBuilder) {
   }
 
@@ -38,12 +40,17 @@ export class FarmerSearchCardComponent implements OnInit {
       startWith(''),
       // delay emits
       debounceTime(300),
+      tap(() => this.isLoading.next(this.form.controls.input.touched)),
       map((value: Farmer | string) => typeof value === 'string' ? value : value.name),
       // use switch map so as to cancel previous subscribed events, before creating new once
       switchMap((value: string) => {
+        // Checking value
         if (value && value !== '') {
 
-          return this.search(value);
+          return this.search(value).then((result) => {
+            this.isLoading.next(false);
+            return result;
+          });
         } else {
           // if no value is present, return null
           return of(null);
@@ -56,7 +63,7 @@ export class FarmerSearchCardComponent implements OnInit {
     return farmer && farmer.name ? farmer.name : '';
   }
 
-  async search(input: string) {
+  async search(input: string): Promise<Farmer[]> {
     return this.farmerSearchAbstractProvider.searchFarmers({input});
   }
 
@@ -64,4 +71,5 @@ export class FarmerSearchCardComponent implements OnInit {
     this.selected = event.option.value;
     this.onPartnerSelectedEvent.emit(this.selected);
   }
+
 }

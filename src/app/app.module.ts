@@ -5,6 +5,8 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FarmerService} from './service/farmer.service';
 import {FarmerSearchCardModule} from './component/farmer-search-card/farmer-search-card.module';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,10 @@ import {FarmerSearchCardModule} from './component/farmer-search-card/farmer-sear
     BrowserAnimationsModule,
 
     // Components
-    FarmerSearchCardModule
+    FarmerSearchCardModule,
+
+    // GraphQL and HTTP
+    GraphQLModule, HttpClientModule
   ],
   providers: [
     FarmerService

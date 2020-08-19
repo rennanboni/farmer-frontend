@@ -26,5 +26,6 @@ export class FarmerSearchCardComponent implements OnInit {
   }
 
   async bla() {
+    console.log((await this.farmerSearchAbstractProvider.searchFarmers({input: '3'}))[0].name);
   }
 }

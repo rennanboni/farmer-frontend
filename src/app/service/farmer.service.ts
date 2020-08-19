@@ -1,29 +1,49 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 
 import {FarmerSearchAbstractProvider, SearchParams} from '../component/farmer-search-card/farmer-search-abstract.provider';
 import {Farmer} from '../model/Farmer';
+import {DocumentNode} from 'graphql';
+import {ApolloQueryResult} from 'apollo-client';
+
+interface FarmersSearchResponse {
+  farmers: Farmer[];
+}
+
+const FarmersSearch: DocumentNode = gql`
+  query($input: String!) {
+    farmers(input: $input) {
+      id
+      name
+      document {
+        id
+        documentNumber
+        documentType
+      }
+      address {
+        id
+        street
+        state
+        address
+        country
+      }
+    }
+  }
+`;
 
 @Injectable()
 export class FarmerService implements FarmerSearchAbstractProvider {
 
-  constructor() { }
+  constructor(private apollo: Apollo) {
+  }
 
   async searchFarmers(params: SearchParams): Promise<Farmer[]> {
-    return [
-      {
-        id: '1',
-        name: 'Rennan Stefan Boni',
-        document: {
-          documentNumber: '348.665.758-59',
-          documentType: 'CPF'
-        },
-        address: {
-          street: 'João Nascimento, 33',
-          state: 'São Paulo',
-          address: 'Vila Santana',
-          country: 'Brazil'
-        }
-      }
-    ];
+    const response: ApolloQueryResult<FarmersSearchResponse> = await this.apollo.query<FarmersSearchResponse, SearchParams>({
+      query: FarmersSearch,
+      variables: params
+    }).toPromise();
+
+    return response.data.farmers;
   }
 }

@@ -11,10 +11,12 @@ import {Farmer} from './model/Farmer';
 export class AppComponent {
   title = 'farmer-frontend';
 
+  farmerAsString: string;
+
   constructor(private farmerService: FarmerService) {
   }
 
   onSelectedFromRoot(farmer: Farmer) {
-    console.log(`onSelectedFromRoot: ${JSON.stringify(farmer)}`);
+    this.farmerAsString = JSON.stringify(farmer);
   }
 }

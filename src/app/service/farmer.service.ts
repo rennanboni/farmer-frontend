@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
+import {ApolloQueryResult} from 'apollo-client';
+import {DocumentNode} from 'graphql';
 import gql from 'graphql-tag';
 
 import {FarmerSearchAbstractProvider, SearchParams} from '../component/farmer-search-card/farmer-search-abstract.provider';
 import {Farmer} from '../model/Farmer';
-import {DocumentNode} from 'graphql';
-import {ApolloQueryResult} from 'apollo-client';
 
 interface FarmersSearchResponse {
   farmers: Farmer[];

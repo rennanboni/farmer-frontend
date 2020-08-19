@@ -1,29 +1,34 @@
 <mat-card>
-  <mat-card-content>
+  <mat-card-content [formGroup]="form">
 
     <div fxLayout="row">
       <mat-form-field>
         <mat-label>Name or Doc#</mat-label>
         <mat-icon matPrefix aria-hidden="false" aria-label="search">search</mat-icon>
-        <input matInput type="text">
+        <input matInput type="text" [matAutocomplete]="auto" formControlName="input" [value]="selected?.name" />
         <mat-icon matSuffix>arrow_forward</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)" [displayWith]="displayFarmer">
+          <mat-option *ngFor="let item of values | async" [value]="item">
+            {{ item.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field fxFlex fxFlexOffset="1">
         <mat-label>Remetente</mat-label>
-        <input matInput type="text" disabled>
+        <input matInput type="text" disabled [value]="selected?.name">
       </mat-form-field>
     </div>
 
     <div fxLayout="row">
       <mat-form-field fxFlex="222px">
         <mat-label>Doc #</mat-label>
-        <input matInput type="text" disabled>
+        <input matInput type="text" disabled [value]="selected?.document?.documentNumber">
       </mat-form-field>
 
       <mat-form-field fxFlex fxFlexOffset="1">
         <mat-label>Address</mat-label>
-        <input matInput type="text" disabled>
+        <input matInput type="text" disabled [value]="selected?.address?.address">
       </mat-form-field>
     </div>
   </mat-card-content>

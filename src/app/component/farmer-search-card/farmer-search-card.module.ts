@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BrowserModule} from '@angular/platform-browser';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
-import {MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
 
 import {FarmerSearchCardComponent} from './farmer-search-card.component';
 
@@ -20,12 +21,14 @@ import {FarmerSearchCardComponent} from './farmer-search-card.component';
     // Core
     BrowserModule,
     BrowserAnimationsModule,
+    // Forms
+    FormsModule, ReactiveFormsModule,
 
     // Flex
     FlexLayoutModule,
 
     // Angular Material
-    MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule
+    MatAutocompleteModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule,
   ],
 })
 export class FarmerSearchCardModule {

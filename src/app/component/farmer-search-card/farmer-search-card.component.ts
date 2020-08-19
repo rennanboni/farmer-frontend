@@ -26,7 +26,7 @@ export class FarmerSearchCardComponent implements OnInit {
   values: Observable<Farmer[]>;
   selected: Farmer;
 
-  private isLoading = new Subject<boolean>();
+  isLoading = new Subject<boolean>();
 
   constructor(private formBuilder: FormBuilder) {
   }

@@ -9,11 +9,10 @@ import {Farmer} from './model/Farmer';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'farmer-frontend';
 
-  farmerAsString: string;
+  public farmerAsString: string;
 
-  constructor(private farmerService: FarmerService) {
+  constructor(public farmerService: FarmerService) {
   }
 
   onSelectedFromRoot(farmer: Farmer) {

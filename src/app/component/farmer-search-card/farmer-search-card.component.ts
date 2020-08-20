@@ -40,7 +40,7 @@ export class FarmerSearchCardComponent implements OnInit {
       startWith(''),
       // delay emits
       debounceTime(300),
-      tap(() => this.isLoading.next(this.form.controls.input.touched)),
+      tap(() => this.isLoading.next(this.form.controls.input.value && this.form.controls.input.value !== '')),
       map((value: Farmer | string) => typeof value === 'string' ? value : value.name),
       // use switch map so as to cancel previous subscribed events, before creating new once
       switchMap((value: string) => {
